@@ -43,14 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Promotion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SalesEngine\IndustryEngine.cs" />
-    <Compile Include="SalesEngine\ProcuctManager.cs" />
+    <Compile Include="SalesEngine\ProductManager.cs" />
     <Compile Include="SalesEngine\PromotionManager.cs" />
-    <Compile Include="SalesEngine\SalesManager.cs" />
+    <Compile Include="SampleClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
