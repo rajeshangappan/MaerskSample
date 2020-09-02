@@ -1,4 +1,4 @@
-
+# Problem Statement 1: Promotion engine
 
 # Promotion Sample:
 -	Before selling the order apply the promotions and then give the discount to that order.
@@ -8,7 +8,7 @@
 # ProductManager(Class):
 -	Maintain the products and details.
 # Promotionmanager(Class):
--	Maintain the promotionís and apply that promotion before the sale.
+-	Maintain the promotion‚Äôs and apply that promotion before the sale.
 # Model:
 # Product (Class):
 -	Product details.
@@ -23,11 +23,11 @@
 |     MinCount              |     If product X, cross the min count limits then percentage wise   promotion will apply.                                  |     No, Feature enhancement     |
 |     Priority              |     If same product has more than one promotion, then depends on the   priority value will apply that promotion.           |     No, Feature enhancement.    |
 # Logics:
-- When apply the promotion we have below implementationís
-In Promotion manager we have method ìApplyPromotionsî. In this we have below methods to achive the promotion engine.
-ApplyUniqueOffer(orders, promodict) ñ single product offer
-ApplyComboOffer(orders, promodict) ñ combo product offer
-ApplyRemainProductValue(orders, promodict) ñ If offer is not suitable to any product, then apply the unit price and add that price to order item.
+- When apply the promotion we have below implementation‚Äôs
+In Promotion manager we have method ‚ÄúApplyPromotions‚Äù. In this we have below methods to achive the promotion engine.
+ApplyUniqueOffer(orders, promodict) ‚Äì single product offer
+ApplyComboOffer(orders, promodict) ‚Äì combo product offer
+ApplyRemainProductValue(orders, promodict) ‚Äì If offer is not suitable to any product, then apply the unit price and add that price to order item.
 
 # Feature enhancement:
 - Create the promotion types and depends on the type will apply the promotion.
