@@ -1,16 +1,38 @@
 ﻿using PromotionSample.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PromotionSample.SalesEngine
 {
+    /// <summary>
+    /// Defines the <see cref="PromotionManager" />.
+    /// </summary>
     public class PromotionManager
     {
-        public IList<Promotion> Promotions { get; set; }
+        #region Private_Properties
+
+        /// <summary>
+        /// Defines the _engine.
+        /// </summary>
         private IndustryEngine _engine;
+
+        #endregion
+
+        #region Public_Internal_Properties
+
+        /// <summary>
+        /// Gets or sets the Promotions.
+        /// </summary>
+        public IList<Promotion> Promotions { get; set; }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PromotionManager"/> class.
+        /// </summary>
+        /// <param name="engine">The engine<see cref="IndustryEngine"/>.</param>
         public PromotionManager(IndustryEngine engine)
         {
             _engine = engine;
@@ -18,6 +40,13 @@ namespace PromotionSample.SalesEngine
             Init();
         }
 
+        #endregion
+
+        #region Private_Methods
+
+        /// <summary>
+        /// The Init.
+        /// </summary>
         private void Init()
         {
             IList<string> nn = new List<string> {"A"};
@@ -27,21 +56,11 @@ namespace PromotionSample.SalesEngine
             AddPromotion(new Promotion { ProductNames = new List<string> { "C", "D" }, IsComboOffer = true, OfferPrice = 50 });
         }
 
-        public void AddPromotion(Promotion promotion)
-        {
-            Promotions.Add(promotion);
-        }
-
-        public void ApplyPromotions(IList<OrderItem> orders)
-        {
-            Dictionary<string, int> promodict= new Dictionary<string, int>();
-            foreach (var order in orders)
-                promodict.Add(order.ProductName, order.Quantity);
-            ApplyUniqueOffer(orders, promodict);
-            ApplyComboOffer(orders, promodict);
-            ApplyRemainProductValue(orders, promodict);
-        }
-
+        /// <summary>
+        /// The ApplyRemainProductValue.
+        /// </summary>
+        /// <param name="orders">The orders<see cref="IList{OrderItem}"/>.</param>
+        /// <param name="promodict">The promodict<see cref="Dictionary{string, int}"/>.</param>
         private void ApplyRemainProductValue(IList<OrderItem> orders, Dictionary<string, int> promodict)
         {
             foreach (var order in orders)
@@ -55,26 +74,12 @@ namespace PromotionSample.SalesEngine
             }
         }
 
-        public void ApplyUniqueOffer(IList<OrderItem> orders, Dictionary<string, int> promodict)
-        {
-            var uniquepromotions = Promotions.Where(x=>!x.IsComboOffer);
-            foreach (var promotion in uniquepromotions)
-            {
-                var order = orders.FirstOrDefault(x=>x.ProductName == promotion.ProductNames[0]);
-                if (order != null)
-                    ApplyUniquePromotion(order, promotion, promodict);
-            }
-        }
-
-        public void ApplyComboOffer(IList<OrderItem> orders, Dictionary<string, int> promodict)
-        {
-            var combopromotions = Promotions.Where(x=>x.IsComboOffer);
-            foreach (var promotion in combopromotions)
-            {
-                ApplyComboPromotion(orders, promotion, promodict);
-            }
-        }
-
+        /// <summary>
+        /// The ApplyComboPromotion.
+        /// </summary>
+        /// <param name="orders">The orders<see cref="IList{OrderItem}"/>.</param>
+        /// <param name="promotion">The promotion<see cref="Promotion"/>.</param>
+        /// <param name="promodict">The promodict<see cref="Dictionary{string, int}"/>.</param>
         private void ApplyComboPromotion(IList<OrderItem> orders, Promotion promotion, Dictionary<string, int> promodict)
         {
             var prodnames = promotion.ProductNames;
@@ -94,11 +99,76 @@ namespace PromotionSample.SalesEngine
             }
         }
 
+        /// <summary>
+        /// The ApplyUniquePromotion.
+        /// </summary>
+        /// <param name="order">The order<see cref="OrderItem"/>.</param>
+        /// <param name="promotion">The promotion<see cref="Promotion"/>.</param>
+        /// <param name="promodict">The promodict<see cref="Dictionary{string, int}"/>.</param>
         private void ApplyUniquePromotion(OrderItem order, Promotion promotion, Dictionary<string, int> promodict)
         {
             var promoCount = promotion.Count;
             order.Discountprice = (order.Quantity / promoCount) * promotion.OfferPrice;
             promodict[order.ProductName] = (order.Quantity % promoCount);
         }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// The AddPromotion.
+        /// </summary>
+        /// <param name="promotion">The promotion<see cref="Promotion"/>.</param>
+        public void AddPromotion(Promotion promotion)
+        {
+            Promotions.Add(promotion);
+        }
+
+        /// <summary>
+        /// The ApplyPromotions.
+        /// </summary>
+        /// <param name="orders">The orders<see cref="IList{OrderItem}"/>.</param>
+        public void ApplyPromotions(IList<OrderItem> orders)
+        {
+            Dictionary<string, int> promodict= new Dictionary<string, int>();
+            foreach (var order in orders)
+                promodict.Add(order.ProductName, order.Quantity);
+            ApplyUniqueOffer(orders, promodict);
+            ApplyComboOffer(orders, promodict);
+            ApplyRemainProductValue(orders, promodict);
+        }
+
+        /// <summary>
+        /// The ApplyUniqueOffer.
+        /// </summary>
+        /// <param name="orders">The orders<see cref="IList{OrderItem}"/>.</param>
+        /// <param name="promodict">The promodict<see cref="Dictionary{string, int}"/>.</param>
+        public void ApplyUniqueOffer(IList<OrderItem> orders, Dictionary<string, int> promodict)
+        {
+            var uniquepromotions = Promotions.Where(x=>!x.IsComboOffer);
+            foreach (var promotion in uniquepromotions)
+            {
+                var order = orders.FirstOrDefault(x=>x.ProductName == promotion.ProductNames[0]);
+                if (order != null)
+                    ApplyUniquePromotion(order, promotion, promodict);
+            }
+        }
+
+        /// <summary>
+        /// The ApplyComboOffer.
+        /// </summary>
+        /// <param name="orders">The orders<see cref="IList{OrderItem}"/>.</param>
+        /// <param name="promodict">The promodict<see cref="Dictionary{string, int}"/>.</param>
+        public void ApplyComboOffer(IList<OrderItem> orders, Dictionary<string, int> promodict)
+        {
+            var combopromotions = Promotions.Where(x=>x.IsComboOffer);
+            foreach (var promotion in combopromotions)
+            {
+                ApplyComboPromotion(orders, promotion, promodict);
+            }
+        }
+
+        #endregion
     }
 }
