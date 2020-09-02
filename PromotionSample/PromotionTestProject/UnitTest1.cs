@@ -17,7 +17,7 @@ namespace PromotionTestProject
         }
 
         [TestMethod]
-        public void TestMethod1()
+        public void OfferCombiation()
         {
             List<OrderItem> Orders = new List<OrderItem>
            {
@@ -28,10 +28,46 @@ namespace PromotionTestProject
            };
            Engine.CalculateOrders(Orders);
 
-            Assert.AreEqual(Orders[0].Discountprice, 130);
-            Assert.AreEqual(Orders[1].Discountprice, 120);
+            Assert.AreEqual(Orders[0].Discountprice, 150);
+            Assert.AreEqual(Orders[1].Discountprice, 160);
             Assert.AreEqual(Orders[2].Discountprice, 0);
-            Assert.AreEqual(Orders[3].Discountprice, 130);
+            Assert.AreEqual(Orders[3].Discountprice, 50);
+        }
+
+        [TestMethod]
+        public void singleProduct()
+        {
+            List<OrderItem> Orders = new List<OrderItem>
+           {
+               new OrderItem{ ProductName = "A", Quantity = 1},
+               new OrderItem{ ProductName = "B", Quantity = 1},
+               new OrderItem {ProductName = "C", Quantity=1},
+               new OrderItem{ProductName ="D", Quantity =1}
+           };
+            Engine.CalculateOrders(Orders);
+
+            Assert.AreEqual(Orders[0].Discountprice, 60);
+            Assert.AreEqual(Orders[1].Discountprice, 40);
+            Assert.AreEqual(Orders[2].Discountprice, 0);
+            Assert.AreEqual(Orders[3].Discountprice, 50);
+        }
+
+        [TestMethod]
+        public void twocomboProduct()
+        {
+            List<OrderItem> Orders = new List<OrderItem>
+           {
+               new OrderItem{ ProductName = "A", Quantity = 1},
+               new OrderItem{ ProductName = "B", Quantity = 1},
+               new OrderItem {ProductName = "C", Quantity=2},
+               new OrderItem{ProductName ="D", Quantity =2}
+           };
+            Engine.CalculateOrders(Orders);
+
+            Assert.AreEqual(Orders[0].Discountprice, 60);
+            Assert.AreEqual(Orders[1].Discountprice, 40);
+            Assert.AreEqual(Orders[2].Discountprice, 0);
+            Assert.AreEqual(Orders[3].Discountprice, 100);
         }
     }
 }

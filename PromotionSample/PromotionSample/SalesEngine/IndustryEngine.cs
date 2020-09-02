@@ -10,7 +10,7 @@ namespace PromotionSample.SalesEngine
     public class IndustryEngine
     {
         internal ProductManager _productManager;
-        private PromotionManager _promotionManager;
+        internal PromotionManager _promotionManager;
 
         private IList<OrderItem> Orders { get; set; }
          

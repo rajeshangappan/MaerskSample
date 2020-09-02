@@ -8,7 +8,10 @@ namespace PromotionSample
         {
 
             SampleClass sample = new SampleClass();
+
             sample.InitializeEngine();
+
+            sample.showPromotions();
 
             // Add Input value by programatically.
             // InputOrders = new List<OrderItem>

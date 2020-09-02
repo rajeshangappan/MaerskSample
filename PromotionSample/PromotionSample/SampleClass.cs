@@ -15,7 +15,7 @@ namespace PromotionSample
 
         public void InitializeEngine()
         {
-            
+
             Console.WriteLine("ProductName - UnitPrice");
 
             foreach (var product in Engine._productManager.Products)
@@ -23,8 +23,28 @@ namespace PromotionSample
 
             Console.WriteLine("\n");
 
-            
 
+
+        }
+
+        public void showPromotions()
+        {
+            Console.WriteLine("Promotions details");
+
+            foreach (var promotion in Engine._promotionManager.Promotions)
+            {
+                if (promotion.IsComboOffer)
+                {
+                    var str = string.Join(",",promotion.ProductNames);
+                    Console.WriteLine($"{str} for {promotion.OfferPrice}");
+                }
+                else
+                {
+                    Console.WriteLine($"{promotion.Count} of {promotion.ProductNames[0]}'s for {promotion.OfferPrice}");
+                }
+            }
+
+            Console.WriteLine("\n");
         }
 
         internal IList<OrderItem> ReadInput()
@@ -65,6 +85,8 @@ namespace PromotionSample
             {
                 Console.WriteLine($"{order.ProductName} - {order.Discountprice}");
             }
+            Console.WriteLine("\n");
+            Console.WriteLine($"Total - {InputOrders.Sum(x => x.Discountprice)}");
         }
     }
 }
